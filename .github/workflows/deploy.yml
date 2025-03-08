@@ -48,7 +48,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDrA6fQBsImECjiQiS5m45LV6P8LSXBY7qtUWrKQ/ep1AR17L2mLXi6ACj3eoKTlAxZnKDIZk+LcEuEjPhu8h8QdXHIPz9dfacSvIZaS5nkNmBwE3Wwn31m8UXhDslzcIVQ31EyxQNykQV4aNkBDAMlb8f5zGgodSMni2Q9XA9VyQ/8qQIS8q7hK4HjpUQ2z3B55ws0jNXr+QmhADYSaToQM78r1WW4LluMOUpZReHgCQWpwFOd4BLdClnqm6hCmFPEWIj6YHKDEiyaWcDY7PRn2SJbqfmDSg87gnfRDk5is6F45TZtjurQX91ShSUnvB0C2LxNXQP0mO6TTOo2yOOfIQxA/lnCo9qSpPY5G3L15v6BTHqopqdwJmDe/0mj83mhmAWXSit/mo8aw89+/TKpKYUE0kJkc2A5m9Z14aEDhVehrmNrNZF3QiLhTw3LvuKDgSOJKmAMoqG8Clk6hYs1iy32yhd5RlzLFyzMNTpDZvP/iOaNhFxEFEkWAkLz3AJVnxYKojsb2swQG/jM4guztiG67WF8ojsUASEp/y5u0MXUydifJm8vGTaHEDrYzRjgmqtG+B/8FHq4aLq0twzA4RtE2vnCNl9cAr5fS3VpVSVE0MGcXBsIho00pNzrSRcsmx3bxSeOogGdPhOGnFfI001XCFYzuNMqLd2rFZxn6Q== your_email@example.com
+          ssh-private-key: ${{ secrets.EC2_KEY }}
           script: |
             docker pull tekpie/springbootcrud:latest
             docker rm -f springbootcrud-container || true
