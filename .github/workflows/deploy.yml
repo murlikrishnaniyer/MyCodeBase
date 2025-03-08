@@ -29,7 +29,6 @@ jobs:
         with:
           username: tekpie
           password: P@ssw0rd999
-          registry: docker.io
         
         
 
