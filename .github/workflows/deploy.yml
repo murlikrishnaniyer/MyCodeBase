@@ -35,9 +35,7 @@ jobs:
       - name: Build Docker Image
         run: docker build -t tekpie/springbootcrud .
         
-      - name: Tag Docker Image
-        run: docker image tag tekpie/springbootcrud:v1
-               
+                    
       - name: Push image to Docker Hub
         run: docker push tekpie/springbootcrud
 
