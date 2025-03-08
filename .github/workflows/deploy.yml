@@ -34,9 +34,12 @@ jobs:
 
       - name: Build Docker Image
         run: docker build -t mycodebase/springbootcrud .
-
+        
+      - name: Tag Docker Image
+        run: docker tag mycodebase/springbootcrud:mycodebase/springbootcrud
+        
       - name: Push image to Docker Hub
-        run: docker push mycodebase/springbootcrud:latest
+        run: docker push mycodebase/springbootcrud:mycodebase/springbootcrud
 
 
   deploy:
