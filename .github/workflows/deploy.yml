@@ -28,10 +28,10 @@ jobs:
         run: echo "${{secrets.DOCKER_PASSWORD}}" | docker login -u "${{secrets.DOCKER_USERNAME}}" -p "${{secrets.DOCKER_PASSWORD}}"
 
       - name: Build Docker Image
-        run: docker build -t MyCodeBase/SpringBootCrud .
+        run: docker build -t mycodebase/springbootcrud .
 
       - name: Push image to Docker Hub
-        run: docker push MyCodeBase/SpringBootCrud:latest
+        run: docker push mycodebase/springbootcrud:latest
 
   deploy:
     needs: build
@@ -44,6 +44,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker pull MyCodeBase/SpringBootCrud:latest
+            docker pull mycodebase/springbootcrud:latest
             docker rm -f springbootcrud-container || true
-            docker run -d -p 8080:8080 --name springbootcrud-container MyCodeBase/SpringBootCrud:latest
+            docker run -d -p 8080:8080 --name springbootcrud-container mycodebase/springbootcrud:latest
