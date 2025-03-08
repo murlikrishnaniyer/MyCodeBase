@@ -1,0 +1,36 @@
+name:CICD
+
+on:
+  push:
+  	branches:[SpringBootCrud]
+  	
+jobs:
+  	build:
+  	 runs-on:[ubuntu-latest]
+  	 steps:
+	 -name:Checkout Source
+	  uses: actions/checkout@v4
+	 -name:Setup Java
+	  uses: actions/setup-java@v4
+	  with:
+	    distribution: 'temurin' # See 'Supported distributions' for available options
+	    java-version: '17'
+	  -name:Setup Java
+	   run: mvn clean install -DskipTests
+	  -name: Login to Docker Hub
+	   run: docker -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+	  -name: Build Docker Image
+	   run: docker build -t MyCodeBase/SpringBootCrud .
+	   -name: Push image to Docker hub
+	    run: docker push MyCodeBase/SpringBootCrud:latest
+  	
+  	Deploy:
+  	   needs:build
+  	   runs-on:[ip-172-31-12-212]
+  	   steps:
+  	    -name:Pull Image from Docker Hub
+  	     run: docker pull MyCodeBase/SpringBootCrud:latest
+  	    -name:Delete old container
+  	     run: docker rm -f pull MyCodeBase/SpringBootCrud:latest
+  	    -name:RUn Docker Container
+  	     run: docker run -d -p 8080:8080 --name SpringBootCrud-container MyCodeBase/SpringBootCrud
