@@ -58,7 +58,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>SpringJpaCrud</finalName>
+		<finalName>SpringBootCrud</finalName>
 			</build>
 
 </project>
