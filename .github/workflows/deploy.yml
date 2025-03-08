@@ -50,6 +50,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker pull mycodebase/springbootcrud:latest
+            docker pull tekpie/springbootcrud:latest
             docker rm -f springbootcrud-container || true
-            docker run -d -p 8080:8080 --name springbootcrud-container mycodebase/springbootcrud:latest
+            docker run -d -p 8080:8080 --name springbootcrud-container tekpie/springbootcrud:latest
