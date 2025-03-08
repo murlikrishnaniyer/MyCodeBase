@@ -31,7 +31,7 @@ jobs:
         run: docker build -t mycodebase/springbootcrud .
 
       - name: Push image to Docker Hub
-        run: docker push tekpie/mycodebase/springbootcrud:latest:0.1
+        run: docker push mycodebase/springbootcrud:latest:0.1
 
 
   deploy:
