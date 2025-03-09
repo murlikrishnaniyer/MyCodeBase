@@ -3,7 +3,7 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [SpringBootCrud]
+    branches: [SpringBootApplicationOnKubernetes]
 
 jobs:
   build:
@@ -32,11 +32,11 @@ jobs:
               
 
       - name: Build Docker Image
-        run: docker build -t tekpie/springbootcrud .
+        run: docker build -t tekpie/spring-boot-k8s .
         
                     
       - name: Push image to Docker Hub
-        run: docker push tekpie/springbootcrud
+        run: docker push tekpie/spring-boot-k8s
 
 
   deploy:
@@ -50,6 +50,8 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull tekpie/springbootcrud:latest
-            docker rm -f springbootcrud-container || true
-            docker run -d -p 8080:8080 --name springbootcrud-container tekpie/springbootcrud:latest
+            docker pull tekpie/spring-boot-k8s:latest
+            eksctl create cluster --name my-cluster --version 1.18 --region us-west-2 --nodegroup-name my-nodes --node-type t3.medium --nodes 3
+            kubectl apply -f deployment.yaml
+            kubectl apply -f service.yaml
+            kubectl get svc spring-boot-k8s
