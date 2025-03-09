@@ -1,0 +1,55 @@
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [SpringBootCrud]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
+
+      - name: Run Tests
+        run: mvn test
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+              
+
+      - name: Build Docker Image
+        run: docker build -t tekpie/springbootcrud .
+        
+                    
+      - name: Push image to Docker Hub
+        run: docker push tekpie/springbootcrud
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_NAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull tekpie/springbootcrud:latest
+            docker rm -f springbootcrud-container || true
+            docker run -d -p 8080:8080 --name springbootcrud-container tekpie/springbootcrud:latest
