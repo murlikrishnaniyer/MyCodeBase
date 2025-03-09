@@ -46,9 +46,9 @@ jobs:
       - name: SSH into EC2 and deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          ssh-private-key: ${{ secrets.EC2_KEY }}
+          host: ${{ secrets.HOST_NAME }}
+          username: ${{ secrets.USER_NAME }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull tekpie/springbootcrud:latest
             docker rm -f springbootcrud-container || true
