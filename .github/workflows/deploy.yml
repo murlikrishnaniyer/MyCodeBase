@@ -54,4 +54,3 @@ jobs:
             eksctl create cluster --name my-cluster --version 1.32 --region us-west-2 --nodegroup-name my-nodes --node-type t3.medium --nodes 3
             eksctl apply -f deployment.yaml
             eksctl apply -f service.yaml
-            eksctl get svc
