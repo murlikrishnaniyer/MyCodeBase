@@ -52,6 +52,6 @@ jobs:
           script: |
             docker pull tekpie/spring-boot-k8s:latest
             eksctl create cluster --name my-cluster --version 1.18 --region us-west-2 --nodegroup-name my-nodes --node-type t3.medium --nodes 3
-            kubectl apply -f deployment.yaml
-            kubectl apply -f service.yaml
-            kubectl get svc spring-boot-k8s
+            eksctl apply -f deployment.yaml
+            eksctl apply -f service.yaml
+            eksctl get svc spring-boot-k8s
