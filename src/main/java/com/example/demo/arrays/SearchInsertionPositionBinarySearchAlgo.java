@@ -22,7 +22,7 @@ class SearchInsertionPositionBinarySearchAlgo {
     }
     public static void main(String[] args) {
         int[] arr = {1,3,5,6};
-        int key = 0;
+        int key = 7;
         System.out.println(search(arr, key));
     }
 }
